@@ -1,10 +1,15 @@
 services:
   evobot:
-    image: evobot:${VERSION}
+    env_file:
+      - .env
+    image: evo:${VERSION}
     container_name: evobot
+    hostname: evobot
     ports:
-      - "24916:24916"
+      - ${EVO_PORT}:24916
     volumes:
-      - /opt/evobot/log/EvoBot.log:/opt/evobot/EvoBot.log
-      - /opt/evobot/config/config.yaml:/opt/evobot/config.yaml
+      - ${VOLUME_DIR}/log/EvoBot.log:/opt/evobot/EvoBot.log
+      - ${VOLUME_DIR}/config/config.yaml:/opt/evobot/config.yaml
     restart: always
+    networks:
+      - evo_net
