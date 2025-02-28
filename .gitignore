@@ -7,6 +7,8 @@
 *.o
 *.out
 
+.idea
+
 # Vendor directory (for Go modules)
 /vendor/
 
