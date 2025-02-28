@@ -1,0 +1,22 @@
+services:
+  redis:
+    image: redis:7.0-bullseye
+    container_name: evo_redis
+    hostname: redis
+    restart: always
+    command: ["redis-server", "/etc/redis.conf", "--requirepass", "$REDIS_PASSWORD"]
+    env_file:
+      - .env
+    environment:
+      TZ: Asia/Shanghai
+    volumes:
+      - ${VOLUME_DIR}/redis/data:/data
+      - ${VOLUME_DIR}/redis/redis.conf:/etc/redis.conf
+    healthcheck:
+      test: "redis-cli -h 127.0.0.1 -p $$REDIS_PORT -a $$REDIS_PASSWORD info Replication"
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    networks:
+      - evo_net
