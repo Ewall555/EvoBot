@@ -27,6 +27,3 @@ config.yaml
 cmd/server/web/assets
 cmd/server/web/monacoeditorwork
 cmd/server/web/index.html
-
-# go sum
-go.sum
