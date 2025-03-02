@@ -9,7 +9,7 @@ import (
 var configFile string
 
 func init() {
-	RootCmd.PersistentFlags().StringVarP(&configFile, "config", "c", "/opt/evobot/conf/config.yaml", "Config file path")
+	RootCmd.PersistentFlags().StringVarP(&configFile, "config", "c", "config.yaml", "Config file path")
 }
 
 var RootCmd = &cobra.Command{

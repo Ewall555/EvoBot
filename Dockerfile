@@ -26,7 +26,15 @@ RUN cd frontend && yarn install && yarn build
 
 WORKDIR /opt/evobot/cmd/server
 
-RUN go mod download -x && go build -o /opt/evobot/evobot ./main.go
+ARG GOPROXY=https://goproxy.io
+ENV CGO_ENABLED=0
+ENV GO111MODULE=on
+ENV GOOS=linux
+
+RUN --mount=type=cache,target=/root/.cache \
+    --mount=type=cache,target=/go/pkg/mod \
+    go mod download -x \
+    && go build -o /opt/evobot/evobot ./main.go
 
 FROM alpine:latest
 
@@ -35,8 +43,7 @@ RUN apk add --no-cache bash
 WORKDIR /opt/evobot
 
 COPY --from=stage-build /opt/evobot/evobot .
-COPY --from=stage-build /opt/evobot/cmd/server/conf/config-example.yaml config.yaml
 
 EXPOSE 24916
 
-CMD ["/opt/evobot/evobot", "-c", "/opt/evobot/config.yaml"]
+CMD ["/opt/evobot/evobot"]
