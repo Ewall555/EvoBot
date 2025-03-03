@@ -29,5 +29,6 @@ docker:
 package:
 	mkdir -p build
 	cp installer/* build/
+	cp cmd/server/conf/config-example.yaml build/
 	docker save -o  build/evo-$(VERSION)-docker-image.tar jumpserver-east/evo:$(VERSION)
 	tar -czvf build/evo-$(VERSION)-package.tar.gz build/*
