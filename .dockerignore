@@ -1,0 +1,6 @@
+vendor
+build/*
+data/*
+release/*
+*.log
+frontend/node_modules/

@@ -8,6 +8,7 @@
 *.out
 
 .idea
+build/
 
 # Vendor directory (for Go modules)
 /vendor/

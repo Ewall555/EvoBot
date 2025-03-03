@@ -1,7 +1,0 @@
-networks:
-  evo_net:
-    driver: bridge
-    ipam:
-      driver: default
-      config:
-        - subnet: ${DOCKER_SUBNET}
