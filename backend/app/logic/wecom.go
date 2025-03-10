@@ -19,7 +19,8 @@ import (
 )
 
 type WecomLogic struct {
-	wecomkf wecom.WecomKFClient
+	wecomkf              wecom.WecomKFClient
+	wecomexternalcontact wecom.WecomExternalContactClient
 }
 
 type IWecomLogic interface {
@@ -37,6 +38,8 @@ type IWecomLogic interface {
 
 	AccountList() ([]wecomclient.AccountInfoSchema, error)
 	AddContactWay(kfid string) (string, error)
+
+	AddGroupMsgTemplate(req wecomclient.AddMsgTemplateRequest) (string, []string, error)
 }
 
 func NewIWecomLogic() IWecomLogic {
@@ -240,6 +243,24 @@ func (u *WecomLogic) AddContactWay(kfid string) (string, error) {
 	return url, nil
 }
 
+func (u *WecomLogic) AddGroupMsgTemplate(req wecomclient.AddMsgTemplateRequest) (string, []string, error) {
+	if err := u.initializeWecomClient(); err != nil {
+		return "", nil, err
+	}
+	msgID, failList, err := u.wecomexternalcontact.AddGroupMsgTemplate(wecomclient.AddMsgTemplateRequest{
+		Sender: req.Sender,
+		Text: wecomclient.MsgText{
+			Content: req.Text.Content,
+		},
+		AllowSelect: req.AllowSelect,
+		ChatIDList:  req.ChatIDList,
+	})
+	if err != nil {
+		return "", nil, err
+	}
+	return msgID, failList, nil
+}
+
 // Helper
 func (u *WecomLogic) initializeWecomClient() error {
 	if u.wecomkf != nil {
@@ -254,15 +275,21 @@ func (u *WecomLogic) initializeWecomClient() error {
 		global.ZAPLOG.Error("wecom config is nil", zap.Error(err))
 		return fmt.Errorf("incomplete Wecom config")
 	}
-	u.wecomkf, err = wecom.NewWecomKFClient(wecomclient.WecomConfig{
+	config := wecomclient.WecomConfig{
 		CorpID:         conf.CorpID,
 		Token:          conf.Token,
 		EncodingAESKey: conf.EncodingAESKey,
 		Secret:         conf.Secret,
 		AgentID:        conf.AgentID,
-	})
+	}
+	u.wecomkf, err = wecom.NewWecomKFClient(config)
 	if err != nil {
 		global.ZAPLOG.Error("failed to initialize WecomKFClient", zap.Error(err))
+		return err
+	}
+	u.wecomexternalcontact, err = wecom.NewWecomExternalContactClient(config)
+	if err != nil {
+		global.ZAPLOG.Error("failed to initialize WecomExternalContactClient", zap.Error(err))
 		return err
 	}
 	return nil

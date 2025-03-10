@@ -5,6 +5,7 @@ import (
 	"EvoBot/backend/app/dto"
 	"EvoBot/backend/app/dto/request"
 	"EvoBot/backend/constant"
+	"EvoBot/backend/utils/wecom/client"
 
 	"github.com/gin-gonic/gin"
 )
@@ -199,4 +200,25 @@ func (b *BaseApi) WecomAddContactWay(ctx *gin.Context) {
 		return
 	}
 	helper.SuccessWithData(ctx, url)
+}
+
+// @Tags wecom_externalcontact
+// @Summary WeCom externalcontact post
+// @Description externalcontact post
+// @Accept json
+// @Produce json
+// @Success 200 {object} string
+// @Router /wecom/externalcontact/massmsg [post]
+func (b *BaseApi) WecomAddGroupMsgTemplate(ctx *gin.Context) {
+	var options client.AddMsgTemplateRequest
+	if err := ctx.ShouldBindJSON(&options); err != nil {
+		helper.ErrResponse(ctx, constant.CodeErrBadRequest)
+		return
+	}
+	msgID, _, err := wecomLogic.AddGroupMsgTemplate(options)
+	if err != nil {
+		helper.ErrResponseWithErr(ctx, constant.CodeErrInternalServer, err)
+		return
+	}
+	helper.SuccessWithData(ctx, msgID)
 }

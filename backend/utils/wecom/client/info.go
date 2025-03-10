@@ -120,3 +120,16 @@ type AccountInfoSchema struct {
 	Name     string `json:"name"`      // 客服帐号名称
 	Avatar   string `json:"avatar"`    // 客服头像URL
 }
+
+// AddMsgTemplateRequest 创建企业群发请求
+type AddMsgTemplateRequest struct {
+	Sender      string   `json:"sender,omitempty"`
+	Text        MsgText  `json:"text"`
+	AllowSelect bool     `json:"allow_select,omitempty"`
+	ChatIDList  []string `json:"chat_id_list,omitempty"`
+}
+
+// MsgText 文本消息
+type MsgText struct {
+	Content string `json:"content"`
+}

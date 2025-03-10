@@ -28,5 +28,7 @@ func (s *WecomRouter) InitRouter(Router *gin.RouterGroup) {
 
 		wecomAuthRouter.GET("/account", baseApi.WecomAccountList)
 		wecomAuthRouter.GET("/account/:kfid", baseApi.WecomAddContactWay)
+
+		wecomAuthRouter.POST("/externalcontact/massmsg", baseApi.WecomAddGroupMsgTemplate)
 	}
 }
