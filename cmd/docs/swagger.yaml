@@ -1,0 +1,768 @@
+basePath: /api/v1
+definitions:
+  client.AccountInfoSchema:
+    properties:
+      avatar:
+        description: 客服头像URL
+        type: string
+      name:
+        description: 客服帐号名称
+        type: string
+      open_kfid:
+        description: 客服帐号ID
+        type: string
+    type: object
+  client.ReceptionistList:
+    properties:
+      status:
+        description: 接待人员的接待状态。0:接待中,1:停止接待。第三方应用需具有“管理帐号、分配会话和收发消息”权限才可获取
+        type: integer
+      userid:
+        description: 接待人员的userid。第三方应用获取到的为密文userid，即open_userid
+        type: string
+    type: object
+  dto.LLMAppConfig:
+    properties:
+      api_key:
+        type: string
+      base_url:
+        type: string
+      config_name:
+        type: string
+      llmapp_type:
+        type: string
+    type: object
+  dto.Policy:
+    properties:
+      max_count:
+        type: integer
+      policyname:
+        type: string
+      repeat:
+        type: integer
+      week:
+        type: string
+      work_times:
+        items:
+          $ref: '#/definitions/dto.WorkTime'
+        type: array
+    type: object
+  dto.Response:
+    properties:
+      code:
+        type: integer
+      data: {}
+      message:
+        type: string
+    type: object
+  dto.SignatureOptions:
+    properties:
+      echostr:
+        type: string
+      msg_signature:
+        type: string
+      nonce:
+        type: string
+      timestamp:
+        type: string
+    type: object
+  dto.WorkTime:
+    properties:
+      end_time:
+        type: string
+      start_time:
+        type: string
+    type: object
+  request.KF:
+    properties:
+      bot_prompt:
+        type: string
+      bot_timeout:
+        type: integer
+      bot_timeout_msg:
+        type: string
+      bot_welcome_msg:
+        type: string
+      botid:
+        type: string
+      chat_timeout:
+        type: integer
+      chatend_msg:
+        type: string
+      kfid:
+        type: string
+      kfname:
+        type: string
+      kfplatform:
+        type: string
+      receive_priority:
+        type: integer
+      receive_rule:
+        type: integer
+      staff_list:
+        items:
+          type: string
+        type: array
+      staff_welcome_msg:
+        type: string
+      status:
+        type: integer
+      transfer_keywords:
+        type: string
+      unmanned_msg:
+        type: string
+    type: object
+  request.Login:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  request.ReceptionistOptions:
+    properties:
+      userid_list:
+        items:
+          type: string
+        type: array
+    type: object
+  request.Staff:
+    properties:
+      email:
+        type: string
+      number:
+        type: string
+      policy_list:
+        items:
+          type: string
+        type: array
+      staffid:
+        type: string
+      staffname:
+        type: string
+    type: object
+  request.WecomConfigApp:
+    properties:
+      agent_id:
+        type: string
+      corp_id:
+        type: string
+      encoding_aes_key:
+        type: string
+      secret:
+        type: string
+      token:
+        type: string
+      type:
+        type: string
+    type: object
+host: localhost
+info:
+  contact: {}
+  description: evobot
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: EvoBot
+  version: "1.0"
+paths:
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: JSON
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.Login'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.Response'
+      summary: User login
+      tags:
+      - auth
+  /auth/logout:
+    post:
+      consumes:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.Response'
+      summary: User logout
+      tags:
+      - auth
+  /kf:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a list of all kf
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.Response'
+      summary: List KF
+      tags:
+      - kf
+    post:
+      consumes:
+      - application/json
+      description: Add a new kf
+      parameters:
+      - description: kf Information
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/request.KF'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.Response'
+      summary: Add kf
+      tags:
+      - kf
+  /kf/{uuid}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete the kf by UUID
+      parameters:
+      - description: kf UUID
+        in: path
+        name: uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.Response'
+      summary: Delete KF
+      tags:
+      - kf
+    get:
+      consumes:
+      - application/json
+      description: Get the kf information by UUID
+      parameters:
+      - description: kf UUID
+        in: path
+        name: uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.Response'
+      summary: Get KF
+      tags:
+      - kf
+    patch:
+      consumes:
+      - application/json
+      description: Update the kf by UUID
+      parameters:
+      - description: kf UUID
+        in: path
+        name: uuid
+        required: true
+        type: string
+      - description: kf Information
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/request.KF'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.Response'
+      summary: Update kf
+      tags:
+      - kf
+  /llmapp/config:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a list of all llmapp configuration
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.LLMAppConfig'
+      summary: List llmapp configuration
+      tags:
+      - llmapp_config
+    post:
+      consumes:
+      - application/json
+      description: Add a new llmapp configuration
+      parameters:
+      - description: llmapp configuration data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.LLMAppConfig'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success response
+          schema:
+            $ref: '#/definitions/dto.Response'
+      summary: Add new llmapp configuration
+      tags:
+      - llmapp
+  /llmapp/config/{uuid}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve llmapp configuration by its UUID
+      parameters:
+      - description: UUID of the llmapp configuration
+        in: path
+        name: uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Get llmapp configuration by UUID
+      tags:
+      - llmapp
+    patch:
+      consumes:
+      - application/json
+      description: Update the llmapp configuration with the provided data
+      parameters:
+      - description: UUID of the llmapp configuration
+        in: path
+        name: uuid
+        required: true
+        type: string
+      - description: llmapp configuration data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.LLMAppConfig'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success response
+          schema:
+            $ref: '#/definitions/dto.Response'
+      summary: Update llmapp configuration
+      tags:
+      - llmapp_config
+  /policy:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a list of all policy
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.Response'
+      summary: List policy
+      tags:
+      - policy
+    post:
+      consumes:
+      - application/json
+      description: Add a new policy
+      parameters:
+      - description: policy Information
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/dto.Policy'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.Response'
+      summary: Add policy
+      tags:
+      - policy
+  /policy/{uuid}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete the policy by UUID
+      parameters:
+      - description: policy UUID
+        in: path
+        name: uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.Response'
+      summary: Delete policy
+      tags:
+      - policy
+    get:
+      consumes:
+      - application/json
+      description: Get the policy information by UUID
+      parameters:
+      - description: policy UUID
+        in: path
+        name: uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.Response'
+      summary: Get policy
+      tags:
+      - policy
+    patch:
+      consumes:
+      - application/json
+      description: Update the policy by UUID
+      parameters:
+      - description: policy UUID
+        in: path
+        name: uuid
+        required: true
+        type: string
+      - description: policy Information
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/dto.Policy'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.Response'
+      summary: Update policy
+      tags:
+      - policy
+  /staff:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a list of all staff members
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.Response'
+      summary: List Staff
+      tags:
+      - staff
+    post:
+      consumes:
+      - application/json
+      description: Add a new staff member
+      parameters:
+      - description: Staff Information
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/request.Staff'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.Response'
+      summary: Add Staff
+      tags:
+      - staff
+  /staff/{uuid}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete the staff member by UUID
+      parameters:
+      - description: Staff UUID
+        in: path
+        name: uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.Response'
+      summary: Delete Staff
+      tags:
+      - staff
+    get:
+      consumes:
+      - application/json
+      description: Get the staff information by UUID
+      parameters:
+      - description: Staff UUID
+        in: path
+        name: uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.Response'
+      summary: Get Staff
+      tags:
+      - staff
+    patch:
+      consumes:
+      - application/json
+      description: Update the staff member by UUID
+      parameters:
+      - description: Staff UUID
+        in: path
+        name: uuid
+        required: true
+        type: string
+      - description: Staff Information
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/request.Staff'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.Response'
+      summary: Update Staff
+      tags:
+      - staff
+  /wecom/account:
+    get:
+      consumes:
+      - application/json
+      description: account list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/client.AccountInfoSchema'
+            type: array
+      summary: WeCom account list
+      tags:
+      - wecom_account
+  /wecom/account/{kfid}:
+    get:
+      consumes:
+      - application/json
+      description: account get
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: WeCom account get
+      tags:
+      - wecom_account
+  /wecom/callback:
+    get:
+      consumes:
+      - application/json
+      description: Verifies the callback URL for WeCom (Enterprise WeChat). This endpoint
+        is used to handle URL verification for WeCom's callback interface.
+      parameters:
+      - description: Wecom SignatureOptions data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.SignatureOptions'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: The echo string returned upon successful verification
+          schema:
+            type: string
+      summary: WeCom Callback URL Verification
+      tags:
+      - wecom_callback
+    post:
+      consumes:
+      - application/json
+      description: Handles callback messages from WeCom (Enterprise WeChat). This
+        endpoint receives and parses the callback data sent by WeCom.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Parsed WeCom callback message
+          schema:
+            type: string
+      summary: WeCom Callback Message Handling
+      tags:
+      - wecom_callback
+  /wecom/config:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve the current Wecom configuration
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Current Wecom configuration
+          schema:
+            $ref: '#/definitions/dto.Response'
+      summary: List Wecom configuration
+      tags:
+      - wecom_config
+  /wecom/config/{uuid}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve the current Wecom configuration
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Current Wecom configuration
+          schema:
+            $ref: '#/definitions/dto.Response'
+      summary: Get Wecom configuration
+      tags:
+      - wecom_config
+    patch:
+      consumes:
+      - application/json
+      description: Update the Wecom configuration with the provided data
+      parameters:
+      - description: Wecom configuration data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.WecomConfigApp'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success response
+          schema:
+            $ref: '#/definitions/dto.Response'
+      summary: Update Wecom configuration
+      tags:
+      - wecom_config
+  /wecom/receptionist/{kfid}:
+    delete:
+      consumes:
+      - application/json
+      description: receptionist delete
+      parameters:
+      - description: Wecom configuration data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.ReceptionistOptions'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: WeCom receptionist delete
+      tags:
+      - wecom_receptionist
+    get:
+      consumes:
+      - application/json
+      description: receptionist list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/client.ReceptionistList'
+            type: array
+      summary: WeCom receptionist list
+      tags:
+      - wecom_receptionist
+    post:
+      consumes:
+      - application/json
+      description: receptionist add
+      parameters:
+      - description: Wecom configuration data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.ReceptionistOptions'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: WeCom receptionist add
+      tags:
+      - wecom_receptionist
+swagger: "2.0"

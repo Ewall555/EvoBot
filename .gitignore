@@ -1,0 +1,37 @@
+.DS_Store
+.idea
+.vscode
+
+# Binaries
+*.exe
+*.dll
+*.so
+*.dylib
+*.bin
+*.o
+*.out
+
+# Vendor directory (for Go modules)
+/vendor/
+
+# Go test binary
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.coverprofile
+
+# log 
+*.log
+
+# Dependency directories
+config.yaml
+
+cmd/server/web/assets
+cmd/server/web/monacoeditorwork
+cmd/server/web/index.html
+
+# go sum
+go.sum
+
+build/
+logs/

@@ -1,0 +1,93 @@
+/**
+ * 覆盖 element-plus 的某些样式
+ */
+
+.el-form {
+  &--inline {
+    .el-form-item {
+      width: 300px;
+    }
+  }
+
+  .el-select,
+  .el-input {
+    width: 100%;
+  }
+
+  .el-form-item {
+    .el-form-item__label {
+      margin-bottom: 2px !important;
+    }
+  }
+
+  .el-date-editor {
+    .el-input__wrapper {
+      box-sizing: border-box;
+      width: 300px !important;
+    }
+  }
+}
+
+.el-menu {
+  .el-menu-item,
+  .el-sub-menu__title {
+    height: 50px;
+    line-height: 50px;
+  }
+
+  &--collapse {
+    .el-sub-menu {
+      &.is-active {
+        background-color: #ecf5ff;
+        .el-icon {
+          color: var(--el-color-primary);
+        }
+      }
+    }
+  }
+
+  .el-menu-item {
+    &.is-active {
+      background-color: #ecf5ff;
+    }
+
+    &:not(.is-active):hover {
+      background-color: #ecf5ff;
+    }
+  }
+}
+
+.el-table {
+  --el-table-header-bg-color: #fafafa;
+
+  thead {
+    color: #333333;
+    font-weight: bold;
+  }
+
+  .el-popper {
+    margin-left: 20px !important;
+    margin-right: 20px !important;
+  }
+}
+
+.el-pagination {
+  justify-content: right;
+}
+
+.el-card {
+  &.is-always-shadow {
+    box-shadow: 0 1px 12px 0 rgba(0, 0, 0, 0.05);
+  }
+}
+
+.el-dropdown-link:focus-visible {
+  outline: unset;
+}
+
+.el-upload {
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}

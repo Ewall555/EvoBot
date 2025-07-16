@@ -1,0 +1,1163 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "evobot",
+        "title": "EvoBot",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {},
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost",
+    "basePath": "/api/v1",
+    "paths": {
+        "/auth/login": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "User login",
+                "parameters": [
+                    {
+                        "description": "JSON",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.Login"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/logout": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "User logout",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/kf": {
+            "get": {
+                "description": "Retrieve a list of all kf",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "kf"
+                ],
+                "summary": "List KF",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Add a new kf",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "kf"
+                ],
+                "summary": "Add kf",
+                "parameters": [
+                    {
+                        "description": "kf Information",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.KF"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/kf/{uuid}": {
+            "get": {
+                "description": "Get the kf information by UUID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "kf"
+                ],
+                "summary": "Get KF",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "kf UUID",
+                        "name": "uuid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete the kf by UUID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "kf"
+                ],
+                "summary": "Delete KF",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "kf UUID",
+                        "name": "uuid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.Response"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Update the kf by UUID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "kf"
+                ],
+                "summary": "Update kf",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "kf UUID",
+                        "name": "uuid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "kf Information",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.KF"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/llmapp/config": {
+            "get": {
+                "description": "Retrieve a list of all llmapp configuration",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "llmapp_config"
+                ],
+                "summary": "List llmapp configuration",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.LLMAppConfig"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Add a new llmapp configuration",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "llmapp"
+                ],
+                "summary": "Add new llmapp configuration",
+                "parameters": [
+                    {
+                        "description": "llmapp configuration data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.LLMAppConfig"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success response",
+                        "schema": {
+                            "$ref": "#/definitions/dto.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/llmapp/config/{uuid}": {
+            "get": {
+                "description": "Retrieve llmapp configuration by its UUID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "llmapp"
+                ],
+                "summary": "Get llmapp configuration by UUID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "UUID of the llmapp configuration",
+                        "name": "uuid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            },
+            "patch": {
+                "description": "Update the llmapp configuration with the provided data",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "llmapp_config"
+                ],
+                "summary": "Update llmapp configuration",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "UUID of the llmapp configuration",
+                        "name": "uuid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "llmapp configuration data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.LLMAppConfig"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success response",
+                        "schema": {
+                            "$ref": "#/definitions/dto.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/policy": {
+            "get": {
+                "description": "Retrieve a list of all policy",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "policy"
+                ],
+                "summary": "List policy",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Add a new policy",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "policy"
+                ],
+                "summary": "Add policy",
+                "parameters": [
+                    {
+                        "description": "policy Information",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.Policy"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/policy/{uuid}": {
+            "get": {
+                "description": "Get the policy information by UUID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "policy"
+                ],
+                "summary": "Get policy",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "policy UUID",
+                        "name": "uuid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete the policy by UUID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "policy"
+                ],
+                "summary": "Delete policy",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "policy UUID",
+                        "name": "uuid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.Response"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Update the policy by UUID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "policy"
+                ],
+                "summary": "Update policy",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "policy UUID",
+                        "name": "uuid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "policy Information",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.Policy"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/staff": {
+            "get": {
+                "description": "Retrieve a list of all staff members",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "staff"
+                ],
+                "summary": "List Staff",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Add a new staff member",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "staff"
+                ],
+                "summary": "Add Staff",
+                "parameters": [
+                    {
+                        "description": "Staff Information",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.Staff"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/staff/{uuid}": {
+            "get": {
+                "description": "Get the staff information by UUID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "staff"
+                ],
+                "summary": "Get Staff",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Staff UUID",
+                        "name": "uuid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete the staff member by UUID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "staff"
+                ],
+                "summary": "Delete Staff",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Staff UUID",
+                        "name": "uuid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.Response"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Update the staff member by UUID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "staff"
+                ],
+                "summary": "Update Staff",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Staff UUID",
+                        "name": "uuid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Staff Information",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.Staff"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/wecom/account": {
+            "get": {
+                "description": "account list",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "wecom_account"
+                ],
+                "summary": "WeCom account list",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/client.AccountInfoSchema"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/wecom/account/{kfid}": {
+            "get": {
+                "description": "account get",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "wecom_account"
+                ],
+                "summary": "WeCom account get",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/wecom/callback": {
+            "get": {
+                "description": "Verifies the callback URL for WeCom (Enterprise WeChat). This endpoint is used to handle URL verification for WeCom's callback interface.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "wecom_callback"
+                ],
+                "summary": "WeCom Callback URL Verification",
+                "parameters": [
+                    {
+                        "description": "Wecom SignatureOptions data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.SignatureOptions"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The echo string returned upon successful verification",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Handles callback messages from WeCom (Enterprise WeChat). This endpoint receives and parses the callback data sent by WeCom.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "wecom_callback"
+                ],
+                "summary": "WeCom Callback Message Handling",
+                "responses": {
+                    "200": {
+                        "description": "Parsed WeCom callback message",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/wecom/config": {
+            "get": {
+                "description": "Retrieve the current Wecom configuration",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "wecom_config"
+                ],
+                "summary": "List Wecom configuration",
+                "responses": {
+                    "200": {
+                        "description": "Current Wecom configuration",
+                        "schema": {
+                            "$ref": "#/definitions/dto.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/wecom/config/{uuid}": {
+            "get": {
+                "description": "Retrieve the current Wecom configuration",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "wecom_config"
+                ],
+                "summary": "Get Wecom configuration",
+                "responses": {
+                    "200": {
+                        "description": "Current Wecom configuration",
+                        "schema": {
+                            "$ref": "#/definitions/dto.Response"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Update the Wecom configuration with the provided data",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "wecom_config"
+                ],
+                "summary": "Update Wecom configuration",
+                "parameters": [
+                    {
+                        "description": "Wecom configuration data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.WecomConfigApp"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success response",
+                        "schema": {
+                            "$ref": "#/definitions/dto.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/wecom/receptionist/{kfid}": {
+            "get": {
+                "description": "receptionist list",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "wecom_receptionist"
+                ],
+                "summary": "WeCom receptionist list",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/client.ReceptionistList"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "receptionist add",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "wecom_receptionist"
+                ],
+                "summary": "WeCom receptionist add",
+                "parameters": [
+                    {
+                        "description": "Wecom configuration data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.ReceptionistOptions"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "delete": {
+                "description": "receptionist delete",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "wecom_receptionist"
+                ],
+                "summary": "WeCom receptionist delete",
+                "parameters": [
+                    {
+                        "description": "Wecom configuration data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.ReceptionistOptions"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "client.AccountInfoSchema": {
+            "type": "object",
+            "properties": {
+                "avatar": {
+                    "description": "客服头像URL",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "客服帐号名称",
+                    "type": "string"
+                },
+                "open_kfid": {
+                    "description": "客服帐号ID",
+                    "type": "string"
+                }
+            }
+        },
+        "client.ReceptionistList": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "description": "接待人员的接待状态。0:接待中,1:停止接待。第三方应用需具有“管理帐号、分配会话和收发消息”权限才可获取",
+                    "type": "integer"
+                },
+                "userid": {
+                    "description": "接待人员的userid。第三方应用获取到的为密文userid，即open_userid",
+                    "type": "string"
+                }
+            }
+        },
+        "dto.LLMAppConfig": {
+            "type": "object",
+            "properties": {
+                "api_key": {
+                    "type": "string"
+                },
+                "base_url": {
+                    "type": "string"
+                },
+                "config_name": {
+                    "type": "string"
+                },
+                "llmapp_type": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.Policy": {
+            "type": "object",
+            "properties": {
+                "max_count": {
+                    "type": "integer"
+                },
+                "policyname": {
+                    "type": "string"
+                },
+                "repeat": {
+                    "type": "integer"
+                },
+                "week": {
+                    "type": "string"
+                },
+                "work_times": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.WorkTime"
+                    }
+                }
+            }
+        },
+        "dto.Response": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {},
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.SignatureOptions": {
+            "type": "object",
+            "properties": {
+                "echostr": {
+                    "type": "string"
+                },
+                "msg_signature": {
+                    "type": "string"
+                },
+                "nonce": {
+                    "type": "string"
+                },
+                "timestamp": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.WorkTime": {
+            "type": "object",
+            "properties": {
+                "end_time": {
+                    "type": "string"
+                },
+                "start_time": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.KF": {
+            "type": "object",
+            "properties": {
+                "bot_prompt": {
+                    "type": "string"
+                },
+                "bot_timeout": {
+                    "type": "integer"
+                },
+                "bot_timeout_msg": {
+                    "type": "string"
+                },
+                "bot_welcome_msg": {
+                    "type": "string"
+                },
+                "botid": {
+                    "type": "string"
+                },
+                "chat_timeout": {
+                    "type": "integer"
+                },
+                "chatend_msg": {
+                    "type": "string"
+                },
+                "kfid": {
+                    "type": "string"
+                },
+                "kfname": {
+                    "type": "string"
+                },
+                "kfplatform": {
+                    "type": "string"
+                },
+                "receive_priority": {
+                    "type": "integer"
+                },
+                "receive_rule": {
+                    "type": "integer"
+                },
+                "staff_list": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "staff_welcome_msg": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "integer"
+                },
+                "transfer_keywords": {
+                    "type": "string"
+                },
+                "unmanned_msg": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.Login": {
+            "type": "object",
+            "required": [
+                "password",
+                "username"
+            ],
+            "properties": {
+                "password": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.ReceptionistOptions": {
+            "type": "object",
+            "properties": {
+                "userid_list": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "request.Staff": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "number": {
+                    "type": "string"
+                },
+                "policy_list": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "staffid": {
+                    "type": "string"
+                },
+                "staffname": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.WecomConfigApp": {
+            "type": "object",
+            "properties": {
+                "agent_id": {
+                    "type": "string"
+                },
+                "corp_id": {
+                    "type": "string"
+                },
+                "encoding_aes_key": {
+                    "type": "string"
+                },
+                "secret": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
